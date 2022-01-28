@@ -11,8 +11,14 @@ This provides Http request (GET, POST,...) for Unity client.
 - Dependencies
 
 	```bash
-	# UniTask
-	Cysharp.Threading.Tasks
+	# Cysharp.Threading.Tasks
+	https://github.com/Cysharp/UniTask
+
+	# Tool.Compet.Json
+	https://github.com/darkcompet/csharp-unity-json
+
+	# Tool.Compet.Log
+	https://github.com/darkcompet/csharp-unity-log
 
 	# Tool.Compet.Core
 	https://github.com/darkcompet/csharp-unity-core
@@ -24,6 +30,6 @@ This provides Http request (GET, POST,...) for Unity client.
 - Just include it into project by add as git-submodule.
 	
 	```bash
-	# Tool.Compet.HttpWithUniTask
-	git submodule add https://github.com/darkcompet/csharp-unity-http-unitask.git
+	# Tool.Compet.Http
+	git submodule add https://github.com/darkcompet/csharp-unity-http.git
 	```
