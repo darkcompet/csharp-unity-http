@@ -27,7 +27,8 @@ namespace Tool.Compet.Http {
 		private readonly Dictionary<string, string> requestHeaders = new();
 
 		public DkHttp SetRequestHeader(string name, string value) {
-			this.requestHeaders.Add(name, value);
+			// Use `TryAdd` since `Add` will throw exception if the key exists.
+			this.requestHeaders.TryAdd(name, value);
 			return this;
 		}
 
