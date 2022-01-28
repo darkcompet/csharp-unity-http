@@ -1,9 +1,25 @@
 # Http for Unity
 
-This is based on UnityWebRequest in Unity with UniTask.
+This provides Http request (GET, POST,...) for Unity client.
+
+- Features
+
+	```bash
+	- Http request with `UnityWebRequest`
+	```
+
+- Dependencies
+
+	```bash
+	# UniTask
+	Cysharp.Threading.Tasks
+
+	# Tool.Compet.Core
+	https://github.com/darkcompet/csharp-unity-core
+	```
 
 
-## Quick Start
+## How to install
 
 - Just include it into project by add as git-submodule.
 	
