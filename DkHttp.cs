@@ -34,7 +34,7 @@ namespace Tool.Compet.Http {
 
 		// Caller should call it from main thread since
 		// we call `UnityWebRequest` which is Unity api that be must called at main thread.
-		public async UniTask<T> Get<T>(string url) where T : ApiResponse {
+		public async UniTask<T> Get<T>(string url) where T : DkApiResponse {
 			// Perform try/catch for whole process
 			try {
 				// Build (compile) setting which was set by caller.
@@ -56,7 +56,9 @@ namespace Tool.Compet.Http {
 
 					// Done request, if failed, we return with http-response-code.
 					if (request.result != UnityWebRequest.Result.Success) {
-						DkLogs.Warning(this, $"GET failed, url: {url}, responseCode: {request.responseCode}, error: {request.error}");
+						if (DkBuildConfig.DEBUG) {
+							DkLogs.Warning(this, $"NG response when GET, url: {url}, responseCode: {request.responseCode}, error: {request.error}");
+						}
 
 						return DkObjects.NewInstace<T>().AlsoDk(res => {
 							res.code = (int)request.responseCode;
@@ -65,7 +67,9 @@ namespace Tool.Compet.Http {
 					}
 				}
 				catch (Exception e) {
-					DkLogs.Warning(this, $"Could not GET, url: {url}, error: {e.Message}");
+					if (DkBuildConfig.DEBUG) {
+						DkLogs.Warning(this, $"Error when GET-request, url: {url}, error: {e.Message}");
+					}
 
 					return DkObjects.NewInstace<T>().AlsoDk(res => {
 						res.code = (int)request.responseCode;
@@ -74,25 +78,23 @@ namespace Tool.Compet.Http {
 				}
 
 				// Now, we are going to decode response body in json.
-				// If error occured, we return result with UNKNOWN (-1) api-code.
-				// Otherwise return response body (already contain api-code) from server.
-				return DkJsons.Json2Obj<T>(request.downloadHandler.text).AlsoDk(res => {
-					if (res.code != ApiCode.OK) {
-						DkLogs.Warning(this, $"Failed response body GET from url: {url}", res);
-					}
-				});
+				// If error occured, we return result with UNKNOWN (-1) apiCode.
+				// Otherwise return response body (already contain apiCode) from server.
+				return DkJsons.Json2Obj<T>(request.downloadHandler.text);
 			}
 			catch (Exception e) {
-				DkLogs.Warning(this, $"Unknown error while GET, url: {url}, error: {e.Message}");
+				if (DkBuildConfig.DEBUG) {
+					DkLogs.Warning(this, $"Unknown error while GET, url: {url}, error: {e.Message}");
+				}
 
 				return DkObjects.NewInstace<T>().AlsoDk(res => {
-					res.code = ApiCode.UNKNOWN;
+					res.code = -1;
 					res.message = e.Message;
 				});
 			}
 		}
 
-		public async UniTask<T> Post<T>(string url, object serializableBody) where T : ApiResponse {
+		public async UniTask<T> Post<T>(string url, object serializableBody) where T : DkApiResponse {
 			// Perform try/catch for whole process
 			try {
 				// Build (compile) setting which was set by caller.
@@ -117,7 +119,9 @@ namespace Tool.Compet.Http {
 
 					// Done request, if failed, we return with http-response-code.
 					if (request.result != UnityWebRequest.Result.Success) {
-						DkLogs.Warning(this, $"POST failed, url: {url}, responseCode: {request.responseCode}, error: {request.error}");
+						if (DkBuildConfig.DEBUG) {
+							DkLogs.Warning(this, $"NG response when POST, url: {url}, responseCode: {request.responseCode}, error: {request.error}");
+						}
 
 						return DkObjects.NewInstace<T>().AlsoDk(res => {
 							res.code = (int)request.responseCode;
@@ -126,7 +130,9 @@ namespace Tool.Compet.Http {
 					}
 				}
 				catch (Exception e) {
-					DkLogs.Warning(this, $"Could not POST, url: {url}, error: {e.Message}");
+					if (DkBuildConfig.DEBUG) {
+						DkLogs.Warning(this, $"Error when POST-request, url: {url}, error: {e.Message}");
+					}
 
 					return DkObjects.NewInstace<T>().AlsoDk(res => {
 						res.code = (int)request.responseCode;
@@ -137,17 +143,15 @@ namespace Tool.Compet.Http {
 				// Now, we are going to decode response body in json.
 				// If error occured, we return result with UNKNOWN (-1) api-code.
 				// Otherwise return response body (already contain api-code) from server.
-				return DkJsons.Json2Obj<T>(request.downloadHandler.text).AlsoDk(res => {
-					if (res.code != ApiCode.OK) {
-						DkLogs.Warning(this, $"Failed response body POST from url: {url}", res);
-					}
-				});
+				return DkJsons.Json2Obj<T>(request.downloadHandler.text);
 			}
 			catch (Exception e) {
-				DkLogs.Warning(this, $"Unknown error while POST, url: {url}, error: {e.Message}");
+				if (DkBuildConfig.DEBUG) {
+					DkLogs.Warning(this, $"Unknown error while POST, url: {url}, error: {e.Message}");
+				}
 
 				return DkObjects.NewInstace<T>().AlsoDk(res => {
-					res.code = ApiCode.UNKNOWN;
+					res.code = -1;
 					res.message = e.Message;
 				});
 			}
