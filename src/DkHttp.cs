@@ -61,7 +61,7 @@ namespace Tool.Compet.Http {
 						}
 
 						return DkObjects.NewInstace<T>().AlsoDk(res => {
-							res.code = (int)request.responseCode;
+							res.status = (int)request.responseCode;
 							res.message = request.error;
 						});
 					}
@@ -72,7 +72,7 @@ namespace Tool.Compet.Http {
 					}
 
 					return DkObjects.NewInstace<T>().AlsoDk(res => {
-						res.code = (int)request.responseCode;
+						res.status = (int)request.responseCode;
 						res.message = e.Message;
 					});
 				}
@@ -88,7 +88,7 @@ namespace Tool.Compet.Http {
 				}
 
 				return DkObjects.NewInstace<T>().AlsoDk(res => {
-					res.code = -1;
+					res.status = -1;
 					res.message = e.Message;
 				});
 			}
@@ -124,7 +124,7 @@ namespace Tool.Compet.Http {
 						}
 
 						return DkObjects.NewInstace<T>().AlsoDk(res => {
-							res.code = (int)request.responseCode;
+							res.status = (int)request.responseCode;
 							res.message = request.error;
 						});
 					}
@@ -135,7 +135,7 @@ namespace Tool.Compet.Http {
 					}
 
 					return DkObjects.NewInstace<T>().AlsoDk(res => {
-						res.code = (int)request.responseCode;
+						res.status = (int)request.responseCode;
 						res.message = e.Message;
 					});
 				}
@@ -151,7 +151,7 @@ namespace Tool.Compet.Http {
 				}
 
 				return DkObjects.NewInstace<T>().AlsoDk(res => {
-					res.code = -1;
+					res.status = -1;
 					res.message = e.Message;
 				});
 			}
